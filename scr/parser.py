@@ -1,3 +1,5 @@
+import os
+
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from dataclasses import dataclass
@@ -10,8 +12,8 @@ class DataVideo:
 
 
 class ParserYouTube:
-    def __init__(self, url_channel):
-        self.url_channel = url_channel
+    def __init__(self):
+        self.url_channel = os.environ["YOUTUBE_CHANNEL_URL"]
 
     def _request(self):
         options = webdriver.ChromeOptions()
