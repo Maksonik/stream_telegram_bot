@@ -1,11 +1,10 @@
 from celery import Celery
-from dotenv import load_dotenv
 
-from scr.celery.celeryconfig import Config
+from scr.celery.celeryconfig import get_celery_config
 
-if __name__ == '__main__':
-    settings = load_dotenv()
-    app = Celery("tasks")
-    app.config_from_object(Config)
+app = Celery("tasks")
+app.config_from_object(get_celery_config())
+
+
+if __name__ == "__main__":
     app.start()
-
