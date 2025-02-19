@@ -1,4 +1,5 @@
 import os
+from typing import ClassVar
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -7,17 +8,18 @@ from scr.types import DataVideo
 
 
 class ParserYouTube:
-    def __init__(self):
-        self.url_channel = os.environ["YOUTUBE_CHANNEL_URL"]
+    url_channel: ClassVar = os.environ["YOUTUBE_CHANNEL_URL"]
 
-    def get_information(self) -> DataVideo:
-        page_source = self._request()
-        return self._parser_data(page_source=page_source)
+    @classmethod
+    def get_information(cls) -> DataVideo:
+        page_source = cls._request()
+        return cls._parser_data(page_source=page_source)
 
-    def _request(self):
-        options = self._create_optinos()
+    @classmethod
+    def _request(cls):
+        options = cls._create_optinos()
         with webdriver.Chrome(options=options) as driver:
-            driver.get(self.url_channel + "/streams")
+            driver.get(cls.url_channel + "/streams")
             page_source = driver.page_source
         return page_source
 
@@ -35,7 +37,8 @@ class ParserYouTube:
             time_scheduled_video=first_video_data.find_all("span")[-1].text,
         )
 
-    def _create_optinos(self) -> webdriver:
+    @staticmethod
+    def _create_optinos() -> webdriver:
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")  # Фоновый режим
         options.add_argument("--disable-gpu")  # Отключение GPU

@@ -9,7 +9,7 @@ from scr.utils import check_time_with_now
 @app.task
 def check_youtube_channel() -> None:
     telegram = TelegramBot()
-    data = ParserYouTube().get_information()
+    data = ParserYouTube.get_information()
     if check_time_with_now(data.time_scheduled_video):
         asyncio.run(
             telegram.send_message(title=data.title, url=data.url_video)
