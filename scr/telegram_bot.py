@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import ClassVar
 
 import telegram
 
@@ -10,6 +11,13 @@ logging.basicConfig(
 
 
 class TelegramBot:
+    _instance: ClassVar = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(TelegramBot, cls).__new__(cls)
+        return cls._instance
+
     def __init__(self):
         self.DICT_MESSAGES = {}
         self.bot = telegram.Bot(os.environ["TELEGRAM_TOKEN"])
