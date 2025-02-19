@@ -1,2 +1,2 @@
 lint:
-	ruff check
+	ruff format && ruff check
