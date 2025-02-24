@@ -8,6 +8,7 @@ from scr.utils import is_scheduled
 
 telegram = TelegramBot()
 
+
 @app.task
 def check_youtube_channel() -> None:
     data = ParserYouTube.get_information()
@@ -23,4 +24,3 @@ def check_youtube_channel() -> None:
     if not scheduled and telegram.DICT_MESSAGES:
         logging.info(f"Delete message, is_scheduled={scheduled}")
         asyncio.get_event_loop().run_until_complete(telegram.delete_message())
-
