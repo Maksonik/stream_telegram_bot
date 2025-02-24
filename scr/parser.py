@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import ClassVar
 
@@ -33,12 +34,13 @@ class ParserYouTube:
         except AttributeError:
             return None
         meta_data = first_video_data.find(id="video-title-link")
-
-        return DataVideo(
+        result = DataVideo(
             title=meta_data.text,
             url_video=meta_data["href"],
             time_scheduled_video=first_video_data.find_all("span")[-1].text,
         )
+        logging.log(level=logging.INFO, msg=f"parsed fata: {result}")
+        return result
 
     @staticmethod
     def _create_optinos() -> webdriver:
