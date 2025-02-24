@@ -39,7 +39,7 @@ class ParserYouTube:
             url_video=meta_data["href"],
             time_scheduled_video=first_video_data.find_all("span")[-1].text,
         )
-        logging.log(level=logging.INFO, msg=f"parsed fata: {result}")
+        logging.info(msg=f"parsed fata: {result}")
         return result
 
     @staticmethod
