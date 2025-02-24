@@ -12,7 +12,7 @@ def get_celery_config() -> dict:
         beat_schedule={
             "add-every-1-minute": {
                 "task": "scr.celery.tasks.check_youtube_channel",
-                "schedule": 60.0,
+                "schedule": 5.0,
             },
         },
     )

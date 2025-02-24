@@ -16,7 +16,7 @@ class ParserYouTube:
         return cls._parser_data(page_source=page_source)
 
     @classmethod
-    def _request(cls):
+    def _request(cls) -> str:
         options = cls._create_optinos()
         with webdriver.Chrome(options=options) as driver:
             driver.get(cls.url_channel + "/streams")
@@ -24,11 +24,14 @@ class ParserYouTube:
         return page_source
 
     @staticmethod
-    def _parser_data(page_source: str) -> DataVideo:
+    def _parser_data(page_source: str) -> DataVideo | None:
         soup = BeautifulSoup(page_source, "html.parser")
-        first_video_data = soup.find("div", id="contents").find(
-            "div", id="meta"
-        )
+        try:
+            first_video_data = soup.find("div", id="contents").find(
+                "div", id="meta"
+            )
+        except AttributeError:
+            return None
         meta_data = first_video_data.find(id="video-title-link")
 
         return DataVideo(
