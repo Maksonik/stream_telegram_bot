@@ -27,6 +27,7 @@ class TelegramBot:
         Send a message about a scheduled stream video
         :param title: title of video
         :param url: url of video
+        :param has_15_minutes_notice: 15 minutes' notice or not
         :return: None
         """
         logging.info(msg=f"Creating message, DICT_MESSAGES={self.LIST_MESSAGES}, TelegramBot={id(self)}")
