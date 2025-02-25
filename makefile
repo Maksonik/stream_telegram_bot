@@ -1,3 +1,6 @@
+test:
+	pytest -v
+
 lint:
 	ruff format && ruff check
 
