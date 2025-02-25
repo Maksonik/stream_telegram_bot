@@ -19,9 +19,11 @@ def sync_notify_about_first_youtube_video() -> None:
     """
     data = ParserYouTube.get_information()
     scheduled = is_scheduled(data.time_scheduled_video)
-    if scheduled and data.title not in telegram.DICT_MESSAGES:
+    title_all_messages = list(map(lambda x: x.title, telegram.LIST_MESSAGES))
+    if scheduled and data.title not in title_all_messages:
         notify_scheduled_youtube_channel_video(data=data)
-    elif not scheduled and data.title in telegram.DICT_MESSAGES:
+    # elif "send second notify for 15 minutes"
+    elif not scheduled and data.title in title_all_messages:
         delete_notify_scheduled_youtube_channel_video(data=data)
     else:
         logging.info(f"Nothing's changed")
