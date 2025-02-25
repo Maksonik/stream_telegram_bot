@@ -1,0 +1,91 @@
+interactions:
+- request:
+    body: chat_id=%40maksmakeses&text=I%27m+a+bot%2C+TEST+VIDEO%21+test_url
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '65'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - api.telegram.org
+      user-agent:
+      - python-telegram-bot v21.10 (https://python-telegram-bot.org)
+    method: POST
+    uri: https://api.telegram.org/bot7667422821:AAEYwDz1eEViRpcNph9Za1mD_KSp0bsmHMA/sendMessage
+  response:
+    body:
+      string: '{"ok":true,"result":{"message_id":116,"sender_chat":{"id":-1002340873314,"title":"test","username":"maksmakeses","type":"channel"},"chat":{"id":-1002340873314,"title":"test","username":"maksmakeses","type":"channel"},"date":1740499319,"text":"I''m
+        a bot, TEST VIDEO! test_url"}}'
+    headers:
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Type,Date,Server,Connection
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '277'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 25 Feb 2025 16:01:59 GMT
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+    status:
+      code: 200
+      message: OK
+- request:
+    body: chat_id=%40maksmakeses&message_id=116
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '37'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - api.telegram.org
+      user-agent:
+      - python-telegram-bot v21.10 (https://python-telegram-bot.org)
+    method: POST
+    uri: https://api.telegram.org/bot7667422821:AAEYwDz1eEViRpcNph9Za1mD_KSp0bsmHMA/deleteMessage
+  response:
+    body:
+      string: '{"ok":true,"result":true}'
+    headers:
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Type,Date,Server,Connection
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '25'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 25 Feb 2025 16:01:59 GMT
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+    status:
+      code: 200
+      message: OK
+version: 1
