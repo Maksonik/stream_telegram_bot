@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 from scr.types import DataVideo
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class ParserYouTube:
