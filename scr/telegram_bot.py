@@ -20,6 +20,7 @@ class TelegramBot:
     def __init__(self):
         self.LIST_MESSAGES: list[DataMessage] = []
         self.bot = telegram.Bot(os.environ["TELEGRAM_TOKEN"])
+        self.chat_id = os.environ["CHANNEL"]
 
     async def send_message(self, title, url) -> None:
         """
@@ -30,10 +31,7 @@ class TelegramBot:
         """
         logging.info(msg=f"Creating message, DICT_MESSAGES={self.LIST_MESSAGES}, TelegramBot={id(self)}")
         if title not in self.LIST_MESSAGES:
-            message = await self.bot.send_message(
-                chat_id=os.environ["CHANNEL"],
-                text=f"I'm a bot, please talk to me! {url}",
-            )
+            message = await self.bot.send_message(chat_id=self.chat_id, text=f"I'm a bot, please talk to me! {url}")
             self.LIST_MESSAGES.append(DataMessage(title=title, id=message.message_id))
             logging.info(msg=f"Created message, id={message.message_id}, DICT_MESSAGES={self.LIST_MESSAGES}")
 
@@ -46,5 +44,5 @@ class TelegramBot:
             message = self.LIST_MESSAGES.pop()
             if message:
                 logging.info(msg=f"Deleting message, id={message.id}")
-                await self.bot.delete_message(chat_id=os.environ["CHANNEL"], message_id=message.id)
+                await self.bot.delete_message(chat_id=self.chat_id, message_id=message.id)
                 logging.info(msg=f"Deleted message, id={message.id}")
