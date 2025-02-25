@@ -9,15 +9,25 @@ from scr.types import DataVideo
 
 
 class ParserYouTube:
+    """Parser to retrieve video data from youtube channel"""
+
     url_channel: ClassVar = os.environ["YOUTUBE_CHANNEL_URL"]
 
     @classmethod
     def get_information(cls) -> DataVideo:
+        """
+        Get data about the first stream video from list page
+        :return: data of first video
+        """
         page_source = cls._request()
         return cls._parser_data(page_source=page_source)
 
     @classmethod
     def _request(cls) -> str:
+        """
+        Get a page with a list of streaming videos
+        :return: html page in python type of str
+        """
         options = cls._create_optinos()
         with webdriver.Chrome(options=options) as driver:
             driver.get(cls.url_channel + "/streams")
@@ -26,6 +36,11 @@ class ParserYouTube:
 
     @staticmethod
     def _parser_data(page_source: str) -> DataVideo | None:
+        """
+        Get necessary information from the page
+        :param page_source: html page
+        :return: DataVideo or None
+        """
         soup = BeautifulSoup(page_source, "html.parser")
         try:
             first_video_data = soup.find("div", id="contents").find("div", id="meta")
@@ -42,6 +57,10 @@ class ParserYouTube:
 
     @staticmethod
     def _create_optinos() -> webdriver:
+        """
+        Create necessary options for webdriver from selenium
+        :return: options for webdriver
+        """
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")  # Фоновый режим
         options.add_argument("--disable-gpu")  # Отключение GPU

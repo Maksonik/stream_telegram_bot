@@ -9,6 +9,7 @@ from scr.utils import is_scheduled
 
 telegram = TelegramBot()
 
+
 @app.task
 def sync_notify_about_first_youtube_video() -> None:
     """
@@ -26,7 +27,7 @@ def sync_notify_about_first_youtube_video() -> None:
         logging.info(f"Nothing's changed")
 
 
-def notify_scheduled_youtube_channel_video(data:DataVideo) -> None:
+def notify_scheduled_youtube_channel_video(data: DataVideo) -> None:
     """
     Notify your Telegram channel of a scheduled video
     :param data: Data of video
@@ -36,7 +37,7 @@ def notify_scheduled_youtube_channel_video(data:DataVideo) -> None:
     asyncio.get_event_loop().run_until_complete(telegram.send_message(title=data.title, url=data.url_video))
 
 
-def delete_notify_scheduled_youtube_channel_video(data:DataVideo) -> None:
+def delete_notify_scheduled_youtube_channel_video(data: DataVideo) -> None:
     """
     Delete the notification of your Telegram channel about a scheduled video that has ended
     :param data: Data of video
