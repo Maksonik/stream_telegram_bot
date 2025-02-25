@@ -16,9 +16,7 @@ def check_youtube_channel() -> None:
 
     if scheduled:
         logging.info(f"Send message: {telegram.DICT_MESSAGES}")
-        asyncio.get_event_loop().run_until_complete(
-            telegram.send_message(title=data.title, url=data.url_video)
-        )
+        asyncio.get_event_loop().run_until_complete(telegram.send_message(title=data.title, url=data.url_video))
         return
 
     if not scheduled and telegram.DICT_MESSAGES:

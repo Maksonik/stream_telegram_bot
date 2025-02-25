@@ -28,9 +28,7 @@ class ParserYouTube:
     def _parser_data(page_source: str) -> DataVideo | None:
         soup = BeautifulSoup(page_source, "html.parser")
         try:
-            first_video_data = soup.find("div", id="contents").find(
-                "div", id="meta"
-            )
+            first_video_data = soup.find("div", id="contents").find("div", id="meta")
         except AttributeError:
             return None
         meta_data = first_video_data.find(id="video-title-link")
