@@ -7,6 +7,7 @@ from selenium import webdriver
 
 from scr.types import DataVideo
 
+
 class ParserYouTube:
     """Parser to retrieve video data from youtube channel"""
 
@@ -27,7 +28,7 @@ class ParserYouTube:
         Get a page with a list of streaming videos
         :return: html page in python type of str
         """
-        options = cls._create_optinos()
+        options = cls._create_options()
         with webdriver.Chrome(options=options) as driver:
             driver.get(cls.url_channel + "/streams")
             page_source = driver.page_source
@@ -56,19 +57,15 @@ class ParserYouTube:
         return result
 
     @staticmethod
-    def _create_optinos() -> webdriver:
+    def _create_options() -> webdriver.ChromeOptions:
         """
-        Create necessary options for webdriver from selenium
-        :return: options for webdriver
+        Create optimized options for Selenium WebDriver.
+        :return: ChromeOptions instance
         """
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")  # Фоновый режим
         options.add_argument("--disable-gpu")  # Отключение GPU
-        options.add_argument("--no-sandbox")  # Для Linux-систем
-        options.add_argument(  # Уменьшает использование памяти
-            "--disable-dev-shm-usage"
-        )
-        options.add_argument(  # Отключаем загрузку изображений
-            "--blink-settings=imagesEnabled=false"
-        )
+        options.add_argument("--no-sandbox")  # Для Linux
+        options.add_argument("--disable-dev-shm-usage")  # Уменьшает использование памяти
+        options.add_argument("--blink-settings=imagesEnabled=false")  # Отключаем изображения
         return options

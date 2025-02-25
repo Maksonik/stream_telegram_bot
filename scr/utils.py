@@ -19,6 +19,7 @@ def is_scheduled(scheduled_time_in_str: str | None) -> bool:
         return False
     return True
 
+
 def get_time(scheduled_time_in_str: str | None) -> datetime:
     """
     Get datetime type from string
@@ -27,4 +28,3 @@ def get_time(scheduled_time_in_str: str | None) -> datetime:
     """
     time = scheduled_time_in_str.replace("Scheduled for ", "")
     return datetime.strptime(time, "%d/%m/%Y, %H:%M")
-
