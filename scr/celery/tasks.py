@@ -23,7 +23,7 @@ def sync_notify_about_first_youtube_video() -> None:
     title_all_messages = list(map(lambda x: x.title, telegram.LIST_MESSAGES))
     if scheduled and data.title not in title_all_messages:
         notify_scheduled_youtube_channel_video(data=data)
-    elif scheduled and get_time(data.time_scheduled_video) < datetime.datetime.now():
+    elif scheduled and get_time(data.time_scheduled_video) - datetime.timedelta(minutes=15) < datetime.datetime.now():
         notify_scheduled_youtube_channel_video(data=data, has_15_minutes_notice=True)
     elif not scheduled and data.title in title_all_messages:
         delete_notify_scheduled_youtube_channel_video(data=data)
@@ -38,7 +38,7 @@ def notify_scheduled_youtube_channel_video(data: DataVideo, has_15_minutes_notic
     :param has_15_minutes_notice: 15 minutes' notice or not
     :return: None
     """
-    logging.info(f"Send message: {data.title}")
+    logging.info(f"Send message: {data.title}, has_15_minutes_notice={has_15_minutes_notice}")
     asyncio.get_event_loop().run_until_complete(telegram.send_message(title=data.title,
                                                                       url=data.url_video,
                                                                       has_15_minutes_notice=has_15_minutes_notice))

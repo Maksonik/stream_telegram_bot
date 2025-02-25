@@ -30,13 +30,14 @@ class TelegramBot:
         :param has_15_minutes_notice: 15 minutes' notice or not
         :return: None
         """
-        logging.info(msg=f"Creating message, DICT_MESSAGES={self.LIST_MESSAGES}, TelegramBot={id(self)}")
-        if any(filter(lambda x: x.title != title and x.has_15_minutes_notice != has_15_minutes_notice, self.LIST_MESSAGES)):
-            message = await self.bot.send_message(chat_id=self.chat_id, text=f"I'm a bot, please talk to me! {url}")
+        logging.info(msg=f"Creating message, LIST_MESSAGES={self.LIST_MESSAGES}, TelegramBot={id(self)}")
+        if not self.LIST_MESSAGES or not any(x.title == title and x.has_15_minutes_notice == has_15_minutes_notice for x in self.LIST_MESSAGES):
+            text = f"I'm a bot, TEST VIDEO FOR 15 MINUTES! {url}" if has_15_minutes_notice else f"I'm a bot, TEST VIDEO! {url}"
+            message = await self.bot.send_message(chat_id=self.chat_id, text=text)
             self.LIST_MESSAGES.append(DataMessage(title=title,
                                                   id=message.message_id,
                                                   has_15_minutes_notice=has_15_minutes_notice))
-            logging.info(msg=f"Created message, id={message.message_id}, DICT_MESSAGES={self.LIST_MESSAGES}")
+            logging.info(msg=f"Created message, id={message.message_id}, LIST_MESSAGES={self.LIST_MESSAGES}")
 
     async def delete_message(self) -> None:
         """

@@ -13,7 +13,7 @@ def get_celery_config() -> dict:
         beat_schedule={
             "add-every-1-minute": {
                 "task": "scr.celery.tasks.sync_notify_about_first_youtube_video",
-                "schedule": 5.0,
+                "schedule": 30.0,
             },
         },
     )

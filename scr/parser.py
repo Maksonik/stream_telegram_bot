@@ -6,9 +6,6 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 from scr.types import DataVideo
-from dotenv import load_dotenv
-load_dotenv()
-
 
 class ParserYouTube:
     """Parser to retrieve video data from youtube channel"""
@@ -47,6 +44,7 @@ class ParserYouTube:
         try:
             first_video_data = soup.find("div", id="contents").find("div", id="meta")
         except AttributeError:
+            logging.error(msg=f"error in parser data {soup}")
             return None
         meta_data = first_video_data.find(id="video-title-link")
         result = DataVideo(
