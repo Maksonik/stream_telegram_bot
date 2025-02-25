@@ -6,6 +6,8 @@ import telegram
 
 
 class TelegramBot:
+    """Class for interacting with the telegram channel"""
+
     _instance: ClassVar = None
 
     def __new__(cls, *args, **kwargs):
@@ -18,6 +20,12 @@ class TelegramBot:
         self.bot = telegram.Bot(os.environ["TELEGRAM_TOKEN"])
 
     async def send_message(self, title, url) -> None:
+        """
+        Send a message about a scheduled stream video
+        :param title: title of video
+        :param url: url of video
+        :return: None
+        """
         logging.info(msg=f"Creating message, DICT_MESSAGES={self.DICT_MESSAGES}, TelegramBot={id(self)}")
         if title not in self.DICT_MESSAGES:
             message = await self.bot.send_message(
@@ -28,6 +36,10 @@ class TelegramBot:
             logging.info(msg=f"Created message, id={message.message_id}, DICT_MESSAGES={self.DICT_MESSAGES}")
 
     async def delete_message(self) -> None:
+        """
+        Delete all messages about a scheduled streaming video that has passed
+        :return: None
+        """
         while self.DICT_MESSAGES:
             message = self.DICT_MESSAGES.popitem()
             if message:
