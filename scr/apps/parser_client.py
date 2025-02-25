@@ -5,32 +5,32 @@ from typing import ClassVar
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
+from scr.core.settings import Settings
 from scr.types import DataVideo
 
 
 class ParserYouTube:
     """Parser to retrieve video data from youtube channel"""
 
-    url_channel: ClassVar = os.environ["YOUTUBE_CHANNEL_URL"]
+    def __init__(self, settings: Settings):
+        self.url_channel = settings.YOUTUBE_CHANNEL_URL
 
-    @classmethod
-    def get_information(cls) -> DataVideo:
+    def get_information(self) -> DataVideo:
         """
         Get data about the first stream video from list page
         :return: data of first video
         """
-        page_source = cls._request()
-        return cls._parser_data(page_source=page_source)
+        page_source = self._request()
+        return self._parser_data(page_source=page_source)
 
-    @classmethod
-    def _request(cls) -> str:
+    def _request(self) -> str:
         """
         Get a page with a list of streaming videos
         :return: html page in python type of str
         """
-        options = cls._create_options()
+        options = self._create_options()
         with webdriver.Chrome(options=options) as driver:
-            driver.get(cls.url_channel + "/streams")
+            driver.get(self.url_channel + "/streams")
             page_source = driver.page_source
         return page_source
 

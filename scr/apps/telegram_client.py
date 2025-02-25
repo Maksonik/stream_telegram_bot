@@ -4,6 +4,7 @@ from typing import ClassVar
 
 import telegram
 
+from scr.core.settings import Settings
 from scr.types import DataMessage
 
 
@@ -17,10 +18,10 @@ class TelegramBot:
             cls._instance = super(TelegramBot, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self):
+    def __init__(self, settings: Settings):
         self.LIST_MESSAGES: list[DataMessage] = []
-        self.bot = telegram.Bot(os.environ["TELEGRAM_TOKEN"])
-        self.chat_id = os.environ["CHANNEL"]
+        self.bot = telegram.Bot(settings.TELEGRAM_TOKEN)
+        self.chat_id = settings.CHANNEL
 
     async def send_message(self, title, url, has_15_minutes_notice: bool = False) -> None:
         """

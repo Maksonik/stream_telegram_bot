@@ -3,13 +3,16 @@ import logging
 
 import celery
 
+from scr.apps.parser_client import ParserYouTube
+from scr.apps.telegram_client import TelegramBot
 from scr.celery.atask import AsyncTask
-from scr.parser import ParserYouTube
-from scr.telegram_bot import TelegramBot
+from scr.core.settings import get_settings
 from scr.types import DataVideo
 from scr.utils import is_scheduled, get_time
 
-telegram = TelegramBot()
+settings = get_settings()
+
+telegram = TelegramBot(settings=settings)
 
 
 @celery.shared_task(name="sync_notify_about_first_youtube_video", base=AsyncTask)
@@ -19,7 +22,7 @@ async def sync_notify_about_first_youtube_video() -> None:
      or remotely it if the stream has ended.
     :return: None
     """
-    data = ParserYouTube.get_information()
+    data = ParserYouTube(settings=settings).get_information()
     scheduled = is_scheduled(data.time_scheduled_video)
     title_all_messages = {x.title for x in telegram.LIST_MESSAGES}
 
