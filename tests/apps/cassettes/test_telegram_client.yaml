@@ -17,7 +17,7 @@ interactions:
       user-agent:
       - python-telegram-bot v21.10 (https://python-telegram-bot.org)
     method: POST
-    uri: https://api.telegram.org/bot7667422821:AAEYwDz1eEViRpcNph9Za1mD_KSp0bsmHMA/sendMessage
+    uri: https://api.telegram.org/botTOKEN/sendMessage
   response:
     body:
       string: '{"ok":true,"result":{"message_id":116,"sender_chat":{"id":-1002340873314,"title":"test","username":"maksmakeses","type":"channel"},"chat":{"id":-1002340873314,"title":"test","username":"maksmakeses","type":"channel"},"date":1740499319,"text":"I''m
@@ -62,7 +62,7 @@ interactions:
       user-agent:
       - python-telegram-bot v21.10 (https://python-telegram-bot.org)
     method: POST
-    uri: https://api.telegram.org/bot7667422821:AAEYwDz1eEViRpcNph9Za1mD_KSp0bsmHMA/deleteMessage
+    uri: https://api.telegram.org/botTOKEN/deleteMessage
   response:
     body:
       string: '{"ok":true,"result":true}'
