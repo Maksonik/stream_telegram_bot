@@ -2,7 +2,6 @@ import pytest
 
 from scr.apps.telegram_client import TelegramBot
 from scr.core.settings import get_settings
-from scr.types import DataVideo
 
 
 @pytest.mark.vcr(record_mode="once")

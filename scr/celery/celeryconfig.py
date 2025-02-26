@@ -15,5 +15,9 @@ def get_celery_config() -> dict:
                 "task": "sync_notify_about_first_youtube_video",
                 "schedule": 30.0,
             },
+            "healthcheck": {
+                "task": "task_healthcheck",
+                "schedule": 5.0,
+            },
         },
     )

@@ -2,7 +2,7 @@ test:
 	pytest -v
 
 lint:
-	ruff format && ruff check
+	ruff format && ruff check --fix
 
 run-beat:
 	celery -A scr.celery.app beat -l INFO

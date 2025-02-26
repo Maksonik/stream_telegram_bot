@@ -1,6 +1,4 @@
 import logging
-import os
-from typing import ClassVar
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
