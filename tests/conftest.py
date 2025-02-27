@@ -4,7 +4,7 @@ from .fixtures import (
     page_with_soon_scheduled_stream_video,
     vcr_config,
     celery_app,
-    event_loop,
+    event_loop_session,
     settings,
 )
 
@@ -15,6 +15,6 @@ __all__ = [
     "page_with_soon_scheduled_stream_video",
     "vcr_config",
     "celery_app",
-    "event_loop",
+    "event_loop_session",
     "settings",
 ]
