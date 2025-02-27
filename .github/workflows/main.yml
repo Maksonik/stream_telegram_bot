@@ -23,7 +23,10 @@ jobs:
         run: poetry install
 
       - name: Activate venv
-        run: ls -la && source bin/activate
+        run: echo "VIRTUAL_ENV=$(poetry env info --path)" >> $GITHUB_ENV
+
+      - name: Set up environment
+        run: echo "$VIRTUAL_ENV/bin" >> $GITHUB_PATH
 
       - name: Code Climate Coverage Action
         uses: paambaati/codeclimate-action@v9.0.0
