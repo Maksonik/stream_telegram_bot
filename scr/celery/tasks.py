@@ -7,12 +7,12 @@ from scr.apps.parser_client import ParserYouTube
 from scr.apps.telegram_client import TelegramBot
 from scr.celery.atask import AsyncTask
 from scr.core.settings import get_settings
-from scr.types import DataVideo
+from scr.types import DataVideo, NotificationAction
 from scr.utils import is_scheduled, get_time
 
 settings = get_settings()
-
 telegram = TelegramBot(settings=settings)
+parser = ParserYouTube(settings=settings)
 
 
 @celery.shared_task(name="sync_notify_about_first_youtube_video", base=AsyncTask)
@@ -22,25 +22,47 @@ async def sync_notify_about_first_youtube_video() -> None:
      or remotely it if the stream has ended.
     :return: None
     """
-    data = ParserYouTube(settings=settings).get_information()
-    scheduled = is_scheduled(data.time_scheduled_video)
+    data = parser.get_information()
     title_all_messages = {x.title for x in telegram.LIST_MESSAGES}
+    now = datetime.datetime.now()
 
-    if scheduled:
-        if data.title not in title_all_messages:
-            await notify_scheduled_youtube_channel_video(data=data)
-        elif (
-            scheduled and get_time(data.time_scheduled_video) - datetime.timedelta(minutes=15) < datetime.datetime.now()
-        ):
-            await notify_scheduled_youtube_channel_video(data=data, has_15_minutes_notice=True)
-    else:
-        if title_all_messages:
-            await delete_notify_scheduled_youtube_channel_video(data=data)
-        else:
+    action = _determine_notification_action(data, title_all_messages, now)
+    logging.info(f"Determined action '{action}' for video: {data.title}")
+
+    match action:
+        case NotificationAction.NOTIFY:
+            await send_notification(data)
+        case NotificationAction.NOTIFY_15:
+            await send_notification(data, has_15_minutes_notice=True)
+        case NotificationAction.DELETE:
+            await delete_notification(data)
+        case _:
             logging.info("Nothing's changed")
 
 
-async def notify_scheduled_youtube_channel_video(data: DataVideo, has_15_minutes_notice: bool = False) -> None:
+def _determine_notification_action(
+    data: DataVideo, existing_titles: set[str], now: datetime.datetime
+) -> NotificationAction:
+    """
+    Determines which action to perform
+    :param data: Data of video
+    :param existing_titles: List of title telegram posts
+    :param now: time is now
+    :return:
+    """
+    if not is_scheduled(data.time_scheduled_video):
+        return NotificationAction.DELETE if existing_titles else NotificationAction.NOTHING
+    if data.title not in existing_titles:
+        return NotificationAction.NOTIFY
+
+    scheduled_time = get_time(data.time_scheduled_video)
+    if scheduled_time - datetime.timedelta(minutes=15) < now:
+        return NotificationAction.NOTIFY_15
+
+    return NotificationAction.NOTHING
+
+
+async def send_notification(data: DataVideo, has_15_minutes_notice: bool = False) -> None:
     """
     Notify your Telegram channel of a scheduled video
     :param data: Data of video
@@ -51,7 +73,7 @@ async def notify_scheduled_youtube_channel_video(data: DataVideo, has_15_minutes
     await telegram.send_message(title=data.title, url=data.url_video, has_15_minutes_notice=has_15_minutes_notice)
 
 
-async def delete_notify_scheduled_youtube_channel_video(data: DataVideo) -> None:
+async def delete_notification(data: DataVideo) -> None:
     """
     Delete the notification of your Telegram channel about a scheduled video that has ended
     :param data: Data of video
