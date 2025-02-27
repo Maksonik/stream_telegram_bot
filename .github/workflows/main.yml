@@ -1,1 +1,31 @@
+name: Test coverage
+on: [push]
+jobs:
+  Coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: Set up Python 12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run image
+        uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: "1.8.2"
+
+      - name: Poetry lock
+        run: poetry lock --no-update
+
+      - name: Install the project dependencies
+        run: poetry install
+
+      - name: Code Climate Coverage Action
+        uses: paambaati/codeclimate-action@v9.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.REPORTER_ID }}
+        with:
+          coverageCommand: make test-cov  # make test-cov
+          debug: true
