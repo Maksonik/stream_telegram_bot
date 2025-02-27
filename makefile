@@ -2,7 +2,7 @@ test:
 	pytest -v
 
 test-cov:
-	pytest  --cov-report=xml  --vcr-record=none
+	pytest --cov=scr tests/ --cov-report=xml  --vcr-record=none
 
 lint:
 	ruff format --config=ruff-format.toml && ruff check --fix
