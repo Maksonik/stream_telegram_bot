@@ -1,5 +1,6 @@
 services:
   beat:
+    platform: linux/amd64
     image: maksonik/stream_telegram_bot:latest
     restart: always
     working_dir: /code
@@ -10,6 +11,7 @@ services:
     command: [ "celery", "-A", "scr.celery.app", "beat", "-l", "INFO" ]
 
   worker:
+    platform: linux/amd64
     image: maksonik/stream_telegram_bot:latest
     restart: always
     working_dir: /code
