@@ -1,4 +1,24 @@
 services:
+  beat:
+    image: maksonik/stream_telegram_bot:latest
+    restart: always
+    working_dir: /code
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: [ "celery", "-A", "scr.celery.app", "beat", "-l", "INFO" ]
+
+  worker:
+    image: maksonik/stream_telegram_bot:latest
+    restart: always
+    working_dir: /code
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: [ "celery", "-A", "scr.celery.app", "worker", "-l", "INFO" ]
+
   redis:
     image: redis:7.2.7-alpine
     restart: always

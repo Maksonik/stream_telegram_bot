@@ -1,0 +1,11 @@
+*
+
+# include source code
+!scr/
+!pyproject.toml
+!poetry.lock
+
+
+# exclude caches
+**/__pycache__
+**/.pytest_cache
