@@ -42,7 +42,7 @@ class TelegramBot:
                 if has_15_minutes_notice
                 else random.choice(STREAM_CREATION_NOTIFICATION_LIST)
             )
-            text = text.format(time=time.strftime("%H:%M %d.%m.%Y"), url=url)
+            text = text.format(time=time.strftime("%H:%M %d.%m.%Y"), url=f"https://www.youtube.com{url}")
             message = await self.bot.send_message(chat_id=self.chat_id, text=text)
             self.LIST_MESSAGES.append(
                 DataMessage(title=title, id=message.message_id, has_15_minutes_notice=has_15_minutes_notice)
