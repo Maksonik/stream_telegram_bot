@@ -141,19 +141,26 @@ async def test_sync_notify_about_first_youtube_video_nothing(mocker):
 async def test_send_notification(mocker):
     mock_telegram = mocker.patch("scr.celery.tasks.telegram.send_message", new_callable=AsyncMock)
 
-    data = DataVideo(title="Test Video", url_video="https://youtube.com/test", time_scheduled_video=None)
+    data = DataVideo(
+        title="Test Video", url_video="https://youtube.com/test", time_scheduled_video="Scheduled for 28/02/2025, 12:00"
+    )
 
     await send_notification(data, has_15_minutes_notice=True)
 
     mock_telegram.assert_awaited_once_with(
-        title="Test Video", url="https://youtube.com/test", has_15_minutes_notice=True
+        title="Test Video",
+        url="https://youtube.com/test",
+        has_15_minutes_notice=True,
+        time=datetime.datetime(2025, 2, 28, 12, 0),
     )
 
 
 async def test_delete_notification(mocker):
     mock_telegram = mocker.patch("scr.celery.tasks.telegram.delete_message", new_callable=AsyncMock)
 
-    data = DataVideo(title="Test Video", url_video="https://youtube.com/test", time_scheduled_video=None)
+    data = DataVideo(
+        title="Test Video", url_video="https://youtube.com/test", time_scheduled_video="Scheduled for 28/02/2025, 12:00"
+    )
 
     await delete_notification(data)
 
