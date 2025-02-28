@@ -12,6 +12,7 @@ class AsyncTask(Task):
     def __call__(self, *args: ParamSpecArgs, **kwargs: ParamSpecKwargs) -> object:
         coro = super().__call__(*args, **kwargs)
         try:
-            return asyncio.run(main=coro)
+            loop = asyncio.get_event_loop()
+            return loop.run_until_complete(coro)
         except RuntimeError:
             return coro

@@ -20,7 +20,7 @@ class TelegramBot:
     def __init__(self, settings: Settings):
         self.LIST_MESSAGES: list[DataMessage] = []
         self.bot = telegram.Bot(settings.TELEGRAM_TOKEN)
-        self.chat_id = settings.TELEGRAM_TOKEN
+        self.chat_id = settings.TELEGRAM_CHANNEL
 
     async def send_message(self, title, url, has_15_minutes_notice: bool = False) -> None:
         """

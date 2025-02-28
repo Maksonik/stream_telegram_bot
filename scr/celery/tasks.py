@@ -50,6 +50,8 @@ def _determine_notification_action(
     :param now: time is now
     :return:
     """
+    if data is None:
+        return NotificationAction.NOTHING
     if not is_scheduled(data.time_scheduled_video):
         return NotificationAction.DELETE if existing_titles else NotificationAction.NOTHING
     if data.title not in existing_titles:
