@@ -1,3 +1,6 @@
+run:
+	docker compose up
+
 test:
 	pytest -v
 
