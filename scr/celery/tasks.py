@@ -72,7 +72,12 @@ async def send_notification(data: DataVideo, has_15_minutes_notice: bool = False
     :return: None
     """
     logging.info(f"Send message: {data.title}, has_15_minutes_notice={has_15_minutes_notice}")
-    await telegram.send_message(title=data.title, url=data.url_video, has_15_minutes_notice=has_15_minutes_notice)
+    await telegram.send_message(
+        title=data.title,
+        time=get_time(data.time_scheduled_video),
+        url=data.url_video,
+        has_15_minutes_notice=has_15_minutes_notice,
+    )
 
 
 async def delete_notification(data: DataVideo) -> None:

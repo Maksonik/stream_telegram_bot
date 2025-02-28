@@ -1,8 +1,11 @@
 import logging
+import random
+from datetime import datetime
 from typing import ClassVar
 
 import telegram
 
+from scr.constants import STREAM_CREATION_NOTIFICATION_LIST, STREAM_15_MINUTES_NOTIFICATION_LIST
 from scr.core.settings import Settings
 from scr.types import DataMessage
 
@@ -22,7 +25,7 @@ class TelegramBot:
         self.bot = telegram.Bot(settings.TELEGRAM_TOKEN)
         self.chat_id = settings.TELEGRAM_CHANNEL
 
-    async def send_message(self, title, url, has_15_minutes_notice: bool = False) -> None:
+    async def send_message(self, title: str, time: datetime, url: str, has_15_minutes_notice: bool = False) -> None:
         """
         Send a message about a scheduled stream video
         :param title: title of video
@@ -35,10 +38,11 @@ class TelegramBot:
             x.title == title and x.has_15_minutes_notice == has_15_minutes_notice for x in self.LIST_MESSAGES
         ):
             text = (
-                f"I'm a bot, TEST VIDEO FOR 15 MINUTES! {url}"
+                random.choice(STREAM_15_MINUTES_NOTIFICATION_LIST)
                 if has_15_minutes_notice
-                else f"I'm a bot, TEST VIDEO! {url}"
+                else random.choice(STREAM_CREATION_NOTIFICATION_LIST)
             )
+            text = text.format(time=time.strftime("%H:%M %d.%m.%Y"), url=url)
             message = await self.bot.send_message(chat_id=self.chat_id, text=text)
             self.LIST_MESSAGES.append(
                 DataMessage(title=title, id=message.message_id, has_15_minutes_notice=has_15_minutes_notice)
