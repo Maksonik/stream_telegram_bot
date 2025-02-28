@@ -9,14 +9,14 @@ def get_celery_config() -> dict:
     return dict(
         broker_url=os.environ["REDIS_URL"],
         enable_utc=True,
-        include=["scr.celery.tasks"],
+        include=["scr.celery.tasks", "scr.internal.tasks"],
         beat_schedule={
             "add-every-1-minute": {
                 "task": "sync_notify_about_first_youtube_video",
                 "schedule": 30.0,
             },
             "healthcheck": {
-                "task": "task_healthcheck",
+                "task": "healthcheck",
                 "schedule": 5.0,
             },
         },

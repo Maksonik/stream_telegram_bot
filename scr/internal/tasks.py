@@ -7,7 +7,7 @@ class HealchcheckDict(TypedDict):
     status: Literal["ok"]
 
 
-@celery.shared_task(name="task_healthcheck")
+@celery.shared_task(name="healthcheck")
 def task_healthcheck() -> HealchcheckDict:
     """Healthcheck for the Celery service."""
     return {"status": "ok"}

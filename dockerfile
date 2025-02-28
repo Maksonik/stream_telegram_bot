@@ -1,7 +1,9 @@
-FROM --platform=$BUILDPLATFORM python:3.12-alpine AS builder
+FROM --platform=linux/amd64 python:3.12-alpine AS builder
 
 RUN true \
     && apk --no-cache add \
+            chromium \
+            chromium-chromedriver
             gcc \
             musl-dev \
             libffi-dev \
