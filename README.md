@@ -70,12 +70,12 @@ docker compose up --build
 ```
 
 ### 2 (B). ⚡ Running Celery Worker and Beat
-1. Run Celery Worker:
+Run Celery Worker:
    ```bash
    make worker
    ```
 
-2. Run Celery Beat (for periodic tasks):
+Run Celery Beat (for periodic tasks):
    ```bash
    make beat
    ```
@@ -157,11 +157,11 @@ docker compose up --build
 
 ### 2 (B). ⚡ Запуск Celery Worker и Beat
 
-1. Запустить Celery Worker:
+Запустить Celery Worker:
    ```bash
    make worker
    ```
-2. Запустить Celery Beat (для периодических задач):
+Запустить Celery Beat (для периодических задач):
    ```bash
    make beat
    ```
