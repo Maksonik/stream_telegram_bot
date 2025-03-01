@@ -40,7 +40,7 @@ def test_determine_notification_action(time_scheduled_video, existing_titles, no
     assert action == expected_action
 
 
-async def test_sync_notify_about_first_youtube_video(mocker):
+async def test_sync_notify_about_first_youtube_video(mocker, redis_client):
     """Тестируем выполнение Celery-задачи."""
 
     mock_parser = mocker.patch("scr.apps.parser_client.ParserYouTube.get_information")
@@ -66,7 +66,7 @@ async def test_sync_notify_about_first_youtube_video(mocker):
         mock_send_notification.assert_called_once_with(test_data)
 
 
-async def test_sync_notify_about_first_youtube_video_for_15_minutes(mocker):
+async def test_sync_notify_about_first_youtube_video_for_15_minutes(mocker, redis_client):
     """Тестируем выполнение Celery-задачи."""
 
     mock_parser = mocker.patch("scr.apps.parser_client.ParserYouTube.get_information")
@@ -92,7 +92,7 @@ async def test_sync_notify_about_first_youtube_video_for_15_minutes(mocker):
         mock_send_notification.assert_called_once_with(test_data, has_15_minutes_notice=True)
 
 
-async def test_sync_notify_about_first_youtube_video_delete(mocker):
+async def test_sync_notify_about_first_youtube_video_delete(mocker, redis_client):
     """Тестируем выполнение Celery-задачи."""
 
     mock_parser = mocker.patch("scr.apps.parser_client.ParserYouTube.get_information")
@@ -118,7 +118,7 @@ async def test_sync_notify_about_first_youtube_video_delete(mocker):
         mock_delete_notification.assert_called_once_with(test_data)
 
 
-async def test_sync_notify_about_first_youtube_video_nothing(mocker):
+async def test_sync_notify_about_first_youtube_video_nothing(mocker, redis_client):
     mock_parser = mocker.patch("scr.apps.parser_client.ParserYouTube.get_information")
 
     test_data = DataVideo(
@@ -138,7 +138,7 @@ async def test_sync_notify_about_first_youtube_video_nothing(mocker):
         mock_determine_action.assert_called_once_with(test_data, set(), mock_now)
 
 
-async def test_send_notification(mocker):
+async def test_send_notification(mocker, redis_client):
     mock_telegram = mocker.patch("scr.celery.tasks.telegram.send_message", new_callable=AsyncMock)
 
     data = DataVideo(
@@ -155,7 +155,7 @@ async def test_send_notification(mocker):
     )
 
 
-async def test_delete_notification(mocker):
+async def test_delete_notification(mocker, redis_client):
     mock_telegram = mocker.patch("scr.celery.tasks.telegram.delete_message", new_callable=AsyncMock)
 
     data = DataVideo(

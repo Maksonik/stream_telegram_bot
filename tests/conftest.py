@@ -6,6 +6,7 @@ from .fixtures import (
     celery_app,
     event_loop_session,
     settings,
+    redis_client,
 )
 
 
@@ -17,4 +18,5 @@ __all__ = [
     "celery_app",
     "event_loop_session",
     "settings",
+    "redis_client",
 ]

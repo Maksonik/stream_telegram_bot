@@ -23,11 +23,11 @@ async def sync_notify_about_first_youtube_video() -> None:
     :return: None
     """
     data = parser.get_information()
-    title_all_messages = {x.title for x in telegram.LIST_MESSAGES}
+    title_all_messages = {message["title"] for message in telegram.storage.get_messages()}
     now = datetime.datetime.now()
 
     action = _determine_notification_action(data, title_all_messages, now)
-    logging.info(f"Determined action '{action}' for video: {data.title}")
+    logging.info(f"Determined action '{action}' for video: {data.title if data is not None else 'None'}")
 
     match action:
         case NotificationAction.NOTIFY:
