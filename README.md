@@ -56,7 +56,7 @@ Before starting, make sure you have **Docker** and **Docker Compose** installed.
    REDIS_PORT=6379
    ```
 
-### 2. 🏗 Running the bot
+### 2 (A). 🏗 Running the bot
 You can run the bot using `make`:
 
 ```bash
@@ -69,7 +69,7 @@ Or manually through Docker Compose:
 docker compose up --build
 ```
 
-### 3. ⚡ Running Celery Worker and Beat
+### 2 (B). ⚡ Running Celery Worker and Beat
 1. Run Celery Worker:
    ```bash
    make worker
@@ -144,7 +144,7 @@ Stream Telegram Bot - это бот, который проверяет нали�
    REDIS_PORT=6379
    ```
 
-### 2. 🏗 Запуск бота
+### 2 (A). 🏗 Запуск бота
 
 Запустить бота можно с помощью `make`:
 ```bash
@@ -155,7 +155,7 @@ make run
 docker compose up --build
 ```
 
-### 3. ⚡ Запуск Celery Worker и Beat
+### 2 (B). ⚡ Запуск Celery Worker и Beat
 
 1. Запустить Celery Worker:
    ```bash
