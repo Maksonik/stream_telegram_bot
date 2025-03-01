@@ -43,10 +43,17 @@ Before starting, make sure you have **Docker** and **Docker Compose** installed.
 
 3. Fill in the `.env` file with the required values:
    ```env
-   TELEGRAM_TOKEN=your_telegram_bot_token
-   TELEGRAM_CHANNEL=your_telegram_channel_id
-   YOUTUBE_CHANNEL_URL=your_youtube_channel_url
-   REDIS_URL=redis://redis:6379/0
+   # TELEGRAM
+   TELEGRAM_TOKEN=TOKEN
+   TELEGRAM_CHANNEL=@the_forever_student
+   
+   # YOUTUBE
+   YOUTUBE_CHANNEL_URL=https://www.youtube.com/@the_forever_student_live
+   
+   # REDIS
+   REDIS_URL=redis://localhost:6379
+   REDIS_HOST=localhost
+   REDIS_PORT=6379
    ```
 
 ### 2. 🏗 Running the bot
@@ -124,10 +131,17 @@ Stream Telegram Bot - это бот, который проверяет нали�
    ```
 3. Заполните `.env` файл нужными значениями:
    ```env
-   TELEGRAM_TOKEN=your_telegram_bot_token
-   TELEGRAM_CHANNEL=your_telegram_channel_id
-   YOUTUBE_CHANNEL_URL=your_youtube_channel_url
-   REDIS_URL=redis://redis:6379/0
+   # TELEGRAM
+   TELEGRAM_TOKEN=TOKEN
+   TELEGRAM_CHANNEL=@the_forever_student
+   
+   # YOUTUBE
+   YOUTUBE_CHANNEL_URL=https://www.youtube.com/@the_forever_student_live
+   
+   # REDIS
+   REDIS_URL=redis://localhost:6379
+   REDIS_HOST=localhost
+   REDIS_PORT=6379
    ```
 
 ### 2. 🏗 Запуск бота
