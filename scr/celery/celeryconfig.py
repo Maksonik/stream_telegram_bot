@@ -11,7 +11,7 @@ def get_celery_config() -> dict:
         enable_utc=True,
         include=["scr.celery.tasks", "scr.internal.tasks"],
         beat_schedule={
-            "add-every-1-minute": {
+            "add-every-30-seconds": {
                 "task": "sync_notify_about_first_youtube_video",
                 "schedule": 30.0,
             },
