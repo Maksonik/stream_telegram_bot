@@ -8,7 +8,7 @@ def test_get_celery_config(settings):
     assert config["broker_url"] == settings.REDIS_URL
     assert config["enable_utc"] is True
     assert "scr.celery.tasks" in config["include"]
-    assert "add-every-1-minute" in config["beat_schedule"]
+    assert "add-every-30-seconds" in config["beat_schedule"]
     assert "healthcheck" in config["beat_schedule"]
 
 

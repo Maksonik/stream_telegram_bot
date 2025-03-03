@@ -6,7 +6,7 @@ from scr.apps.telegram_client import TelegramBot
 from scr.core.settings import get_settings
 
 
-@pytest.mark.vcr(record_mode="once")
+@pytest.mark.vcr(record_mode="none")
 async def test_telegram_client(redis_client):
     telegram_bot = TelegramBot(settings=get_settings())
     await telegram_bot.send_message(title="Test message", url="test_url", time=datetime(2025, 2, 28, 12, 0))
